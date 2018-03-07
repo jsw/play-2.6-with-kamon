@@ -3,7 +3,7 @@ organization := "jsw"
 
 version := "1.0-SNAPSHOT"
 
-lazy val root = (project in file(".")).enablePlugins(PlayScala)
+lazy val root = (project in file(".")).enablePlugins(PlayScala, JavaAgent)
 
 scalaVersion := "2.12.4"
 
@@ -18,3 +18,6 @@ libraryDependencies += "io.kamon" %% "kamon-logback" % "1.0.0"
 
 // Adds additional packages into conf/routes
 // play.sbt.routes.RoutesKeys.routesImport += "jsw.binders._"
+
+javaAgents += "org.aspectj" % "aspectjweaver" % "1.8.13" // (2)
+javaOptions in Universal += "-Dorg.aspectj.tracing.factory=default" // (3)
