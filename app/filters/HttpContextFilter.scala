@@ -4,6 +4,8 @@ import akka.stream.Materializer
 import util.{ContextNames, RequestAttrKey, RequestIdUtil}
 import javax.inject.{Inject, Singleton}
 import com.typesafe.scalalogging.StrictLogging
+import kamon.Kamon
+import kamon.context.Key
 import org.slf4j.MDC
 import play.api.inject.Module
 import play.api.mvc.{EssentialAction, EssentialFilter}
@@ -30,9 +32,14 @@ class HttpContextFilter @Inject()()(implicit ec: ExecutionContext) extends Essen
     val requestId = RequestIdUtil.newRequestId(incomingRequestId)
     MDC.put(RequestId, requestId)
     logger.info("MDC set")
-    next(requestHeader.addAttr(RequestAttrKey.RequestId, requestId)).map { result =>
-      MDC.clear()
-      result
+    val key = Key.broadcastString("request-id")
+    Kamon.withContextKey(key, Some(requestId)) {
+      logger.info(s"Kamon context updated: ${Kamon.currentContext.get(key)}") // this log isn't displaying
+      println(s"Kamon context updated: ${Kamon.currentContext.get(key)}")
+      next(requestHeader.addAttr(RequestAttrKey.RequestId, requestId)).map { result =>
+        MDC.clear()
+        result
+      }
     }
   }
 }
