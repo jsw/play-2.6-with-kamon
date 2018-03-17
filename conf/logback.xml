@@ -3,7 +3,7 @@
   <conversionRule conversionWord="coloredLevel" converterClass="play.api.libs.logback.ColoredLevel" />
 
   <conversionRule conversionWord="traceID" converterClass="kamon.logback.LogbackTraceIDConverter" />
-  <conversionRule conversionWord="requestID" converterClass="kamon.logback.RequestIDConverter" />
+  <conversionRule conversionWord="requestID" converterClass="util.RequestIDConverter" />
 
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>

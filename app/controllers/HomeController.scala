@@ -4,7 +4,7 @@ import com.typesafe.scalalogging.StrictLogging
 import play.api.mvc._
 import util.Client
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 class HomeController(cc: ControllerComponents, client: Client)(implicit ec: ExecutionContext) extends AbstractController(cc) with StrictLogging {
 
@@ -15,6 +15,6 @@ class HomeController(cc: ControllerComponents, client: Client)(implicit ec: Exec
     for {
       s1 <- str1
       s2 <- str2
-    } yield Ok(s"$s1 $s2")
+    } yield Ok(s"$s2")
   }
 }

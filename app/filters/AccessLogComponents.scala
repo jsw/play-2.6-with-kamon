@@ -1,10 +1,9 @@
 package filters
 
 
-import javax.inject.{Inject, Provider, Singleton}
 import akka.stream.Materializer
 import com.typesafe.scalalogging.StrictLogging
-import org.slf4j.MDC
+import javax.inject.{Inject, Provider, Singleton}
 import play.api.http.HeaderNames
 import play.api.inject.Module
 import play.api.mvc._
@@ -59,7 +58,6 @@ class AccessLogFilter @Inject() (config: AccessLogConfig)(implicit ec: Execution
         s"requestTime=${requestTime}",
         s"status=${result.header.status}").mkString(" ")
       if (!config.excludedPaths.contains(requestHeader.path)) logger.info(message)
-      if (MDC.get(RequestId) == null) logger.error("No MDC")
       result.withHeaders("X-Request-Time" -> requestTime.toString)
     }
   }
