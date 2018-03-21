@@ -3,11 +3,11 @@
   <conversionRule conversionWord="coloredLevel" converterClass="play.api.libs.logback.ColoredLevel" />
 
   <conversionRule conversionWord="traceID" converterClass="kamon.logback.LogbackTraceIDConverter" />
-  <conversionRule conversionWord="requestID" converterClass="util.RequestIDConverter" />
+  <conversionRule conversionWord="requestId" converterClass="util.RequestIdConverter" />
 
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
-      <pattern>%date{ISO8601} [%-5level] [%thread] [%mdc] [%traceID][%requestID] %logger{5}:%line %message%n%xException</pattern>
+      <pattern>%date{ISO8601} [%-5level] [%thread] [%mdc] [%traceID] [%requestId] %logger{5}:%line %message%n%xException</pattern>
     </encoder>
   </appender>
 
