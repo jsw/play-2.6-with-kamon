@@ -9,7 +9,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class Client(wsClient: WSClient)(implicit ec: ExecutionContext) extends StrictLogging {
 
-  def get(): Future[String] = wsClient.url("https://httpbin.org").get().map(_ => "hello")
+  def get(): Future[String] = wsClient.url("https://httpbin.org/headers").get().map(_.bodyAsBytes.utf8String)
 
   def sleep(): Future[String] = {
     logger.info("sleep")
